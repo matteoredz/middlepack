@@ -1,25 +1,40 @@
-# encoding: utf-8
+activate :autoprefixer do |prefix|
+  prefix.browsers = "last 2 versions"
+end
 
 activate :directory_indexes
 
-# Use webpack for assets
-activate :external_pipeline,
-         name: :webpack,
-         command: build? ? 'yarn run build' : 'yarn run start',
-         source: '.tmp/dist',
-         latency: 1
+command =
+  if build?
+    "./node_modules/webpack/bin/webpack.js --bail -p"
+  else
+    "./node_modules/webpack/bin/webpack.js --watch -d --progress --color"
+  end
 
-# Reload the browser automatically whenever files change
+external_pipeline_options = {
+  name: :webpack,
+  command: command,
+  source: ".tmp/dist",
+  latency: 1
+}
+
+activate :external_pipeline, external_pipeline_options
+
+set :relative_links, true
+
 configure :development do
   activate :livereload
+
+  config[:css_dir] = ".tmp/dist"
+  config[:js_dir]  = ".tmp/dist"
 end
 
-set :css_dir,    'assets/stylesheets'
-set :js_dir,     'assets/javascript'
-set :images_dir, 'images'
+page "/*.xml",  layout: false
+page "/*.json", layout: false
+page "/*.txt",  layout: false
 
-# Build-specific configuration
 configure :build do
-  # Enable cache buster (except for images)
-  activate :asset_hash, ignore: [/\.jpg\Z/, /\.png\Z/]
+  config[:http_prefix] = "/middlepack"
+  config[:css_dir]     = ""
+  config[:js_dir]      = ""
 end

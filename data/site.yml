@@ -1,7 +1,9 @@
-language:    'it'
-name:        ''
-url:         ''
-human_url:   ''
-title:       ''
-description: ''
-author:      'Matteo Rossi'
+---
+language: it
+name:
+url:
+human_url:
+title:
+description:
+author: Matteo Rossi
+...
