@@ -34,7 +34,7 @@ page "/*.json", layout: false
 page "/*.txt",  layout: false
 
 configure :build do
-  config[:http_prefix] = "" # Set to /repo-name for GitHub Pages
+  config[:http_prefix] = "/middlepack"
   config[:css_dir]     = ""
   config[:js_dir]      = ""
 end
