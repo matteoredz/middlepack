@@ -5,7 +5,6 @@
 .mm-pid-*
 .rbenv-*
 .ruby-gemset
-.ruby-version
 .sass-cache
 .sassc
 .tmp
