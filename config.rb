@@ -1,3 +1,7 @@
+activate :autoprefixer do |prefix|
+  prefix.browsers = "last 2 versions"
+end
+
 activate :directory_indexes
 
 external_pipeline_options = {
@@ -13,8 +17,12 @@ configure :development do
   activate :livereload
 end
 
-set :css_dir, "assets/stylesheets"
-set :js_dir, "assets/javascript"
+page "/*.xml",  layout: false
+page "/*.json", layout: false
+page "/*.txt",  layout: false
+
+set :css_dir,    "assets/stylesheets"
+set :js_dir,     "assets/javascript"
 set :images_dir, "images"
 
 configure :build do

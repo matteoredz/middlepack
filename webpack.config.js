@@ -1,84 +1,27 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var Clean = require('clean-webpack-plugin');
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: {
-    main: './assets/javascript/main.js',
+    site: ['./source/javascripts/site.js'],
+    style: ['./source/stylesheets/site.css.scss'],
   },
-
-  resolve: {
-    modules: [
-      __dirname + '/assets/javascript',
-      __dirname + '/assets/stylesheets',
-      __dirname + '/node_modules',
-    ],
-    extensions: ['.js', '.css', '.scss']
-  },
-
   output: {
-    path: __dirname + '/.tmp/dist',
-    filename: 'assets/javascript/[name].bundle.js',
+    path: path.resolve(__dirname, '.tmp/dist'),
+    filename: '[name].min.js',
   },
-
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: function () {
-                  return [
-                    require('autoprefixer')
-                  ];
-                }
-              }
-            }
-          ]}),
-      },
-      {
-        test: /\.scss$|.sass$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: function () {
-                  return [
-                    require('autoprefixer')
-                  ];
-                }
-              }
-            },
-            'sass-loader'
-          ]
-        }),
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       }
     ]
   },
-
-  plugins: [
-    // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
-    // inside your code for any environment checks; UglifyJS will automatically
-    // drop any unreachable code.
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
-    new Clean(['.tmp']),
-    new ExtractTextPlugin('assets/stylesheets/[name].bundle.css'),
-  ],
+  plugins: [new MiniCssExtractPlugin()],
 };

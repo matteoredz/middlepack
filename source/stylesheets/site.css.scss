@@ -1,0 +1,15 @@
+.index {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: 400;
+  margin: 2rem 1.2rem;
+  text-align: center;
+
+  &__title {}
+
+  &__logo {
+    display: inline-block;
+    padding: 3rem;
+    width: 200px;
+  }
+}
