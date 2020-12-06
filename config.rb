@@ -4,27 +4,37 @@ end
 
 activate :directory_indexes
 
+command =
+  if build?
+    "./node_modules/webpack/bin/webpack.js --bail -p"
+  else
+    "./node_modules/webpack/bin/webpack.js --watch -d --progress --color"
+  end
+
 external_pipeline_options = {
   name: :webpack,
-  command: build? ? "yarn run build" : "yarn run start",
+  command: command,
   source: ".tmp/dist",
   latency: 1
 }
 
 activate :external_pipeline, external_pipeline_options
 
+set :relative_links, true
+
 configure :development do
   activate :livereload
+
+  config[:css_dir] = ".tmp/dist"
+  config[:js_dir]  = ".tmp/dist"
 end
 
 page "/*.xml",  layout: false
 page "/*.json", layout: false
 page "/*.txt",  layout: false
 
-set :css_dir,    "assets/stylesheets"
-set :js_dir,     "assets/javascript"
-set :images_dir, "images"
-
 configure :build do
-  activate :asset_hash, ignore: [/\.jpg\Z/, /\.png\Z/]
+  config[:http_prefix] = "" # Set to /repo-name for GitHub Pages
+  config[:css_dir]     = ""
+  config[:js_dir]      = ""
 end
