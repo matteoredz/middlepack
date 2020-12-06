@@ -1,5 +1,5 @@
 {
-  "name": "middleman-webpack",
+  "name": "middlepack",
   "version": "1.0.0",
   "description": "Middleman with Webpack as external assets pipeline",
   "main": "index.js",

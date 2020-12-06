@@ -1,4 +1,3 @@
-// Animate our logo
 import * as d3 from 'd3-selection';
 import 'd3-transition';
 
@@ -29,7 +28,6 @@ const addBounceToLogo = () => {
     bounce(logo);
   });
 
-  // Zoom and initialize
   bounce(logo);
 }
 

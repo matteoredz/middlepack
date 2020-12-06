@@ -1,7 +1,12 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-# https://github.com/middleman/middleman#middleman---makes-developing-websites-simple
-gem 'middleman', '~> 4'
+gem "middleman"
+gem "middleman-livereload"
 
-# https://github.com/middleman/middleman-livereload
-gem 'middleman-livereload', '~> 3.4.3'
+group :development, :test do
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-minitest", require: false
+end
